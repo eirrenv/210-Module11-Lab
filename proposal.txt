@@ -1,6 +1,13 @@
 Project Overview: 
+My project creates a bee hive simulation, designed to predict future changes within bee hives over 5 years. This software will illustrate the life cycles of bee hives,
+either through natural or man-made causes.
 
 Implementation:
+I plan on using a std:map to store and manage data between different hives and bees in different situations. This map will categorize the bees into three std::lists:
+worker drones, queen bees, and dead bees. The map will have the bee hive locations as its key. The map's value will be an array of these three lists.
+
+One map will be for a wild bee hive, another for a beehive close to wild humans, and the last will be for a beekeeper hive. 
 
 Simulated events:
-
+The simulation will focus on three events: new queen bee births, colony food sources, and random enemy encounters. At any given time period, a new queen bee can split the hive
+or die out, external factors can cause migration, or a sickness can affect a beehive.
