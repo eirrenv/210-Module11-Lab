@@ -11,35 +11,15 @@ using namespace std;
 // simulation prototype
 void sim(map<string, array<list<string>, 3>>& hive, int interval);
 
+void read_bees(map<string, array<list<string>, 3>>& hive);
+
 int main() {
     srand(time(0)); // for randomness
 
     map<string, array<list<string>, 3>> hives; // map of hives and bees in hive
 
-    string location, beeType; // initialize variables for hive and bee type
-
-    ifstream fin("bees.txt"); // open file
+    read_bees(hives);
     
-    if (!fin) {
-        cout << "Error opening file." << endl;
-        return 1;
-    }
-
-    // insert bees based on location and type
-    while (fin >> location >> beeType) {
-        if (beeType == "worker") {
-            hives[location][0].push_back("WorkerBee");
-        }
-        else if (beeType == "queen") {
-            hives[location][1].push_back("QueenBee");
-        }
-        else if (beeType == "dead") {
-            hives[location][2].push_back("DeadBee");
-        }
-    }
-
-    fin.close();
-
     sim(hives, 60);
 
     return 0;
@@ -54,6 +34,11 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
             string location = pair.first;
             auto& list = pair.second;
             
+            // new bees are born every month as long as there is a queen bee
+            for (int j = 0; j < rand() % list[0].size() && !list[1].empty(); ++j) {
+                list[0].push_back("WorkerBee");
+            }
+
             int event = rand() % 3;
             
             // event if queen bee is born in hive
@@ -70,9 +55,38 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
                 for (int j = 0; j < beesToRemove; ++j) {
                     list[0].pop_back();
                 }
+                // remove queen bee as the new queen left the hive
+                list[1].pop_back();
+
                 // test print
                 cout << "Amount of worker bees after new queen bee: " << list[0].size() << endl;
             }
         }
     }
+}
+
+void read_bees(map<string, array<list<string>, 3>>& hive) {
+    string location, beeType; // initialize variables for hive and bee type
+
+    ifstream fin("bees.txt"); // open file
+    
+    if (!fin) {
+        cout << "Error opening file." << endl;
+    }
+    else {
+    // insert bees based on location and type
+        while (fin >> location >> beeType) {
+            if (beeType == "worker") {
+                hive[location][0].push_back("WorkerBee");
+            }
+            else if (beeType == "queen") {
+                hive[location][1].push_back("QueenBee");
+            }
+            else if (beeType == "dead") {
+                hive[location][2].push_back("DeadBee");
+            }
+        }
+    }
+
+    fin.close();
 }
