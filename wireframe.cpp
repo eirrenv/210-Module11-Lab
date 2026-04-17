@@ -13,6 +13,8 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval);
 
 void read_bees(map<string, array<list<string>, 3>>& hive);
 
+void add_bees(map<string, array<list<string>, 3>>& hive);
+
 int main() {
     srand(time(0)); // for randomness
 
@@ -35,9 +37,7 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
             auto& list = pair.second;
             
             // new bees are born every month as long as there is a queen bee
-            for (int j = 0; j < rand() % list[0].size() && !list[1].empty(); ++j) {
-                list[0].push_back("WorkerBee");
-            }
+            add_bees(hive);
 
             int event = rand() % 3;
             
@@ -65,6 +65,7 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
     }
 }
 
+// read file and insert bee information into file
 void read_bees(map<string, array<list<string>, 3>>& hive) {
     string location, beeType; // initialize variables for hive and bee type
 
@@ -89,4 +90,16 @@ void read_bees(map<string, array<list<string>, 3>>& hive) {
     }
 
     fin.close();
+}
+
+// add worker bees to hive in simulation
+void add_bees(map<string, array<list<string>, 3>>& hive) {
+    for (auto& pair : hive) {
+        string location = pair.first;
+        auto& list = pair.second;
+
+        for (int j = 0; j < rand() % list[0].size() && !list[1].empty(); ++j) {
+            list[0].push_back("WorkerBee");
+        }
+    }
 }
