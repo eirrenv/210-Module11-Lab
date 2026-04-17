@@ -53,15 +53,25 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
         for (auto& pair : hive) {
             string location = pair.first;
             auto& list = pair.second;
-
+            
             int event = rand() % 3;
             
             // event if queen bee is born in hive
             if (event == 0) {
-                list[1].push_back("QueenBee");
-                cout << "New queen been born in " << location << endl;
+                // test prints
+                cout << "Hive type: " << location << endl;
+                cout << "Amount of worker bees before queen bee: " << list[0].size() << endl;
 
-                list[0].pop_front();
+                list[1].push_back("QueenBee");
+                cout << "New queen has been born in " << location << endl;
+                
+                // halving amount of worker bees due to moving hives
+                int beesToRemove = list[0].size() / 2;
+                for (int j = 0; j < beesToRemove; ++j) {
+                    list[0].pop_back();
+                }
+                // test print
+                cout << "Amount of worker bees after new queen bee: " << list[0].size() << endl;
             }
         }
     }
