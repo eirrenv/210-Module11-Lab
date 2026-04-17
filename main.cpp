@@ -55,11 +55,26 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
                 for (int j = 0; j < beesToRemove; ++j) {
                     list[0].pop_back();
                 }
-                // remove queen bee as the new queen left the hive
-                list[1].pop_back();
+                // remove queen bee as the new queen left the hive, as long as hive is not empty
+                if (!list[1].empty()) {
+                    list[1].pop_back();
+                }
 
                 // test print
                 cout << "Amount of worker bees after new queen bee: " << list[0].size() << endl;
+            }
+            // bear attack, kills random amount of worker bees and queen dies
+            if (event == 1) {
+                cout << "Hive type: " << location << endl;
+                int beesToRemove = rand() % list[0].size();
+                for (int j = 0; j < beesToRemove; ++j) {
+                    list[0].pop_back();
+                    list[2].push_back("DeadBee");
+                }
+                if (!list[1].empty()) {
+                    list[1].pop_back();
+                }
+                cout << "Amount of worker bees after bear attack: " << list[0].size() << endl;
             }
         }
     }
