@@ -1,0 +1,2 @@
+1. Crash when attempting to create 2nd event, fixed by adding catch to check if there was a queen in the hive
+2. Arithmetic exception when attempting to change halving the hive into a random amount, guarded in case of 0
