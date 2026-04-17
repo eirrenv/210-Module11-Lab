@@ -39,10 +39,10 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
             // new bees are born every month as long as there is a queen bee
             add_bees(hive);
 
-            int event = rand() % 3;
+            int event = rand() % 100;
             
             // event if queen bee is born in hive
-            if (event == 0) {
+            if (event <= 20) {
                 // test prints
                 cout << "Hive type: " << location << endl;
                 cout << "Amount of worker bees before queen bee: " << list[0].size() << endl;
@@ -63,8 +63,8 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
                 // test print
                 cout << "Amount of worker bees after new queen bee: " << list[0].size() << endl;
             }
-            // bear attack, kills random amount of worker bees and queen dies
-            if (event == 1) {
+            // external attack, kills random amount of worker bees and queen dies
+            else if (event <= 30) {
                 cout << "Hive type: " << location << endl;
                 int beesToRemove = rand() % list[0].size();
                 for (int j = 0; j < beesToRemove; ++j) {
@@ -74,7 +74,16 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
                 if (!list[1].empty()) {
                     list[1].pop_back();
                 }
-                cout << "Amount of worker bees after bear attack: " << list[0].size() << endl;
+                cout << "Amount of worker bees after external attack: " << list[0].size() << endl;
+            }
+            // good food, population boom
+            else if (event <= 40) {
+                cout << "Hive type: " << location << endl;
+                int hiveSize = list[0].size();
+                for (int j = 0; j < hiveSize; ++j) {
+                    list[0].push_back("WorkerBee");
+                }
+                cout << "Amount of worker bees after new food source found: " << list[0].size() << endl;
             }
         }
     }
