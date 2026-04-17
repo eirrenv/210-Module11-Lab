@@ -1,0 +1,19 @@
+The function I will be testing is the ad_bees() function for my code. The ad_bees() function is supposed to add a random amount of bees,
+scaled to the current amount of worker bees in the hive.
+
+To test the function, I will simply return true if the function has added bees, and false if the function did not add any bees.
+
+Unit test function:
+
+int main() {
+    bool success = false;
+    currentBees = list[0].size();
+    add_bees();
+    if (currentBees < list[0].size()) {
+        success = true;
+        return success;
+    }
+    else {
+        return success;
+    }
+}   
