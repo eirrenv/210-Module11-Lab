@@ -45,13 +45,14 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
             if (event <= 20) {
                 // test prints
                 cout << "Hive type: " << location << endl;
-                cout << "Amount of worker bees before queen bee: " << list[0].size() << endl;
-
                 list[1].push_back("QueenBee");
                 cout << "New queen has been born in " << location << endl;
                 
-                // halving amount of worker bees due to moving hives
+                // random amount of worker bees leave due to moving hives
                 int beesToRemove = list[0].size() / 2;
+                if (beesToRemove > 0) {
+                    beesToRemove = rand() % beesToRemove;
+                }
                 for (int j = 0; j < beesToRemove; ++j) {
                     list[0].pop_back();
                 }
@@ -61,11 +62,10 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
                 }
 
                 // test print
-                cout << "Amount of worker bees after new queen bee: " << list[0].size() << endl;
             }
             // external attack, kills random amount of worker bees and queen dies
             else if (event <= 30) {
-                cout << "Hive type: " << location << endl;
+                cout << "External attack in " << location << endl;
                 int beesToRemove = rand() % list[0].size();
                 for (int j = 0; j < beesToRemove; ++j) {
                     list[0].pop_back();
@@ -74,17 +74,17 @@ void sim(map<string, array<list<string>, 3>>& hive, int interval) {
                 if (!list[1].empty()) {
                     list[1].pop_back();
                 }
-                cout << "Amount of worker bees after external attack: " << list[0].size() << endl;
             }
             // good food, population boom
             else if (event <= 40) {
-                cout << "Hive type: " << location << endl;
+                cout << "Food source found by " << location << endl;
                 int hiveSize = list[0].size();
                 for (int j = 0; j < hiveSize; ++j) {
                     list[0].push_back("WorkerBee");
                 }
-                cout << "Amount of worker bees after new food source found: " << list[0].size() << endl;
             }
+
+            cout << location << " size: " << list[0].size() << endl; 
         }
     }
 }
